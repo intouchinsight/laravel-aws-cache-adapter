@@ -21,5 +21,5 @@ return [
     /**
      * The Laravel cache store defined in `config/cache.php` to use.
      */
-    'cache' => env('LARAVEL_AWS_CACHE_CACHE', 'file')
+    'cache' => env('LARAVEL_AWS_CACHE_CACHE', 'file'),
 ];

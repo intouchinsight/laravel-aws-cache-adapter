@@ -8,16 +8,17 @@ use PHPUnit\Framework\TestCase;
 
 class LaravelCacheAdapterTest extends TestCase
 {
-    /** @var  \Mockery\MockInterface */
+    /** @var \Mockery\MockInterface */
     protected $manager;
+
     protected $repository;
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->manager = m::mock('Illuminate\Cache\CacheManager');
         $this->manager->shouldReceive('store')
