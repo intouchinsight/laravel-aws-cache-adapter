@@ -35,11 +35,11 @@ class LaravelCacheAdapter implements CacheInterface
     {
         $this->manager = $manager;
         $this->store = $store;
-        $this->prefix = 'aws_credentials_' . $prefix;
+        $this->prefix = 'aws_credentials_'.$prefix;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function get($key)
     {
@@ -47,7 +47,7 @@ class LaravelCacheAdapter implements CacheInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function remove($key)
     {
@@ -55,7 +55,7 @@ class LaravelCacheAdapter implements CacheInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function set($key, $value, $ttl = 0)
     {
@@ -65,12 +65,11 @@ class LaravelCacheAdapter implements CacheInterface
     /**
      * Generate a cache key which incorporates the prefix.
      *
-     * @param $key
      * @return string
      */
     protected function generateKey($key)
     {
-        return $this->prefix . $key;
+        return $this->prefix.$key;
     }
 
     /**
@@ -79,7 +78,6 @@ class LaravelCacheAdapter implements CacheInterface
      * the nearest whole minute for any value over one minute. First, if the passed in TTL is 0 we return
      * 0 to allow an unlimited cache lifetime.
      *
-     * @param $ttl
      * @return float|int
      */
     protected function convertTtl($ttl)
