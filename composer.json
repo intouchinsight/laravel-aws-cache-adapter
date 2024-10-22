@@ -31,5 +31,12 @@
   "scripts": {
     "cs": "phpcs --standard=psr2 src/",
     "test": "phpunit"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "LukeWaite\\LaravelAwsCacheAdapter\\ServiceProvider"
+      ]
+    }
   }
 }
