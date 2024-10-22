@@ -22,7 +22,8 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(__DIR__.'/../config/laravel-aws-cache.php', 'laravel-aws-cache');
+
     }
 
     /**
@@ -32,10 +33,6 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot(CacheManager $manager, Repository $config)
     {
-        $this->publishes([
-            __DIR__.'/../config/laravel-aws-cache.php' => config_path('laravel-aws-cache.php'),
-        ]);
-
         if (config('laravel-aws-cache.enable')) {
             $this->insertCredentialSetting($manager, $config);
         }
