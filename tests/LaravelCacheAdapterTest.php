@@ -4,6 +4,7 @@ namespace LukeWaite\LaravelAwsCacheAdapter\Tests;
 
 use LukeWaite\LaravelAwsCacheAdapter\LaravelCacheAdapter;
 use Mockery as m;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class LaravelCacheAdapterTest extends TestCase
@@ -27,6 +28,7 @@ class LaravelCacheAdapterTest extends TestCase
             ->andReturn($this->repository = m::mock('StdClass'));
     }
 
+    #[Test]
     public function testGetWithPrefix()
     {
         $this->repository->shouldReceive('get')->with('aws_credentials_testkey')->once()->andReturn('testValue');
@@ -35,6 +37,7 @@ class LaravelCacheAdapterTest extends TestCase
         $this->assertEquals('testValue', $adapter->get('key'));
     }
 
+    #[Test]
     public function testRemoveWithoutPrefix()
     {
         $this->repository->shouldReceive('forget')->with('aws_credentials_key_to_remove')->once();
@@ -43,6 +46,7 @@ class LaravelCacheAdapterTest extends TestCase
         $adapter->remove('key_to_remove');
     }
 
+    #[Test]
     public function testSetLessThan60SecondsRoundsUp()
     {
         $this->repository->shouldReceive('put')->with('aws_credentials_key', 'value', 1)->once();
@@ -51,6 +55,7 @@ class LaravelCacheAdapterTest extends TestCase
         $adapter->set('key', 'value', 59);
     }
 
+    #[Test]
     public function testSetGreaterThan60SecondsRoundsDown()
     {
         $this->repository->shouldReceive('put')->with('aws_credentials_key', 'value', 1)->once();
@@ -59,6 +64,7 @@ class LaravelCacheAdapterTest extends TestCase
         $adapter->set('key', 'value', 61);
     }
 
+    #[Test]
     public function testSetGreaterThan120SecondsRoundsDown()
     {
         $this->repository->shouldReceive('put')->with('aws_credentials_key', 'value', 2)->once();
@@ -67,6 +73,7 @@ class LaravelCacheAdapterTest extends TestCase
         $adapter->set('key', 'value', 121);
     }
 
+    #[Test]
     public function testSet0Retains0()
     {
         $this->repository->shouldReceive('put')->with('aws_credentials_key', 'value', 0)->once();
