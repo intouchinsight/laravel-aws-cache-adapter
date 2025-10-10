@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Laravel Cache Adapter for AWS Credential Caching.
  *

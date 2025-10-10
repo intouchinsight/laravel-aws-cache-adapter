@@ -14,12 +14,12 @@ class LaravelCacheAdapterTest extends TestCase
 
     protected $repository;
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         m::close();
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->manager = m::mock('Illuminate\Cache\CacheManager');
         $this->manager->shouldReceive('store')
@@ -29,7 +29,7 @@ class LaravelCacheAdapterTest extends TestCase
     }
 
     #[Test]
-    public function testGetWithPrefix()
+    public function test_get_with_prefix()
     {
         $this->repository->shouldReceive('get')->with('aws_credentials_testkey')->once()->andReturn('testValue');
 
@@ -38,47 +38,52 @@ class LaravelCacheAdapterTest extends TestCase
     }
 
     #[Test]
-    public function testRemoveWithoutPrefix()
+    public function test_remove_without_prefix()
     {
         $this->repository->shouldReceive('forget')->with('aws_credentials_key_to_remove')->once();
 
         $adapter = new LaravelCacheAdapter($this->manager, 'file', '');
         $adapter->remove('key_to_remove');
+        $this->assertTrue(true); // Add assertion to avoid risky test
     }
 
     #[Test]
-    public function testSetLessThan60SecondsRoundsUp()
+    public function test_set_less_than60_seconds_rounds_up()
     {
         $this->repository->shouldReceive('put')->with('aws_credentials_key', 'value', 1)->once();
 
         $adapter = new LaravelCacheAdapter($this->manager, 'file', '');
         $adapter->set('key', 'value', 59);
+        $this->assertTrue(true); // Add assertion to avoid risky test
     }
 
     #[Test]
-    public function testSetGreaterThan60SecondsRoundsDown()
+    public function test_set_greater_than60_seconds_rounds_down()
     {
         $this->repository->shouldReceive('put')->with('aws_credentials_key', 'value', 1)->once();
 
         $adapter = new LaravelCacheAdapter($this->manager, 'file', '');
         $adapter->set('key', 'value', 61);
+        $this->assertTrue(true); // Add assertion to avoid risky test
     }
 
     #[Test]
-    public function testSetGreaterThan120SecondsRoundsDown()
+    public function test_set_greater_than120_seconds_rounds_down()
     {
         $this->repository->shouldReceive('put')->with('aws_credentials_key', 'value', 2)->once();
 
         $adapter = new LaravelCacheAdapter($this->manager, 'file', '');
         $adapter->set('key', 'value', 121);
+        $this->assertTrue(true); // Add assertion to avoid risky test
     }
 
     #[Test]
-    public function testSet0Retains0()
+    public function test_set0_retains0()
     {
         $this->repository->shouldReceive('put')->with('aws_credentials_key', 'value', 0)->once();
 
         $adapter = new LaravelCacheAdapter($this->manager, 'file', '');
         $adapter->set('key', 'value', 0);
+        $this->assertTrue(true); // Add assertion to avoid risky test
     }
 }
