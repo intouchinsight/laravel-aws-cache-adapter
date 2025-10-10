@@ -1,0 +1,56 @@
+name: Tests
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ["8.3", "8.4"]
+        laravel: ["11", "12"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer
+          extensions: json, mbstring, ctype, openssl, tokenizer, pdo, curl
+
+      - name: Validate composer.json
+        run: composer validate --no-check-publish
+
+      - name: Install deps for Laravel ${{ matrix.laravel }}
+        shell: bash
+        run: |
+          composer update --no-interaction --prefer-dist --ansi \
+            --with "illuminate/support:^${{ matrix.laravel }}" \
+            --with-all-dependencies
+
+      - name: Run tests
+        run: vendor/bin/phpunit --no-coverage
+
+  phplint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 10
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: xdebug
+
+      - name: Install dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Run laravel pint
+        run: ./vendor/bin/pint --test
