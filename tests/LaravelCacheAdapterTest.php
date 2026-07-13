@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LukeWaite\LaravelAwsCacheAdapter\Tests;
 
 use LukeWaite\LaravelAwsCacheAdapter\LaravelCacheAdapter;
