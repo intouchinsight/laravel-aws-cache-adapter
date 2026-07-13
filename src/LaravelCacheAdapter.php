@@ -36,7 +36,7 @@ class LaravelCacheAdapter implements CacheInterface
     {
         $this->manager = $manager;
         $this->store = $store;
-        $this->prefix = 'aws_credentials_'.$prefix;
+        $this->prefix = 'aws_credentials_' . $prefix;
     }
 
     /**
@@ -70,7 +70,7 @@ class LaravelCacheAdapter implements CacheInterface
      */
     protected function generateKey($key)
     {
-        return $this->prefix.$key;
+        return $this->prefix . $key;
     }
 
     /**
